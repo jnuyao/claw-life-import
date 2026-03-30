@@ -116,7 +116,7 @@ Confidence: 0.70 baseline.
 
 Standard [JSON Resume](https://jsonresume.org) format. Direct 1:1 field mapping. Confidence: 0.95.
 
-### source_linkedin_zip (v0.4)
+### source_linkedin_zip (v0.4) — Recommended
 
 LinkedIn export ZIP file. Parse:
 - `positions.json` → experience (`positionList`)
@@ -134,7 +134,49 @@ LinkedIn JSON export (single file, no recommendations). Same field mapping as ab
 
 ### source_linkedin (URL — guide export)
 
-Do NOT scrape. Tell user to export via LinkedIn Settings → Data Privacy → Get a copy of your data → select "Profile" → download ZIP → `/clawsight ./linkedin-export.zip`.
+**⚠️ Why Clawsight cannot directly access LinkedIn URLs:**
+
+LinkedIn enforces aggressive anti-scraping measures — direct HTTP requests return status 999, and browser access without login is blocked by an authentication wall. No publicly accessible profile data can be retrieved programmatically. This is a platform-level restriction, not a Clawsight limitation.
+
+Additionally, LinkedIn's Terms of Service explicitly prohibit unauthorized automated data collection. As a tool that manages your personal profile, Clawsight chooses to respect platform rules and protect your account from risk.
+
+**However, LinkedIn is one of the most valuable data sources for Clawsight** — it contains endorsements, recommendations, and professional network signals that no other source provides. The cross-source insights become significantly richer with LinkedIn data (especially Blind Spots and Hidden Strengths).
+
+**How to export your LinkedIn data (3 minutes):**
+
+When a user provides a `linkedin.com` URL, respond with the following instructions:
+
+```
+🔗 LinkedIn 数据需要手动导出（LinkedIn 禁止自动抓取）。
+
+但这非常值得做 — LinkedIn 包含其他来源没有的推荐信和背书数据，
+能让跨源洞察质量显著提升。
+
+📥 导出步骤（约 3 分钟）：
+
+1. 打开 LinkedIn → 点击头像 → Settings & Privacy
+   直达链接: https://www.linkedin.com/mypreferences/d/download-my-data
+
+2. 选择 "Download larger data archive"
+   勾选: ✅ Profile  ✅ Recommendations  ✅ Skills
+   （其他可选项可以不勾）
+
+3. 点击 "Request archive"
+
+4. LinkedIn 会发送邮件（通常 10 分钟内，偶尔最长 24 小时）
+
+5. 下载 ZIP 文件后，在这里执行：
+   /clawsight linkedin-export.zip
+
+💡 Tip: 选择 "Connections" 可以额外获得人脉网络数据。
+   选择 "Endorsements" 可以看到技能背书的具体来源。
+
+⏳ 在等待 LinkedIn 导出期间，可以先导入其他数据源：
+   /clawsight resume.pdf
+   /clawsight https://github.com/your-username
+```
+
+Do NOT attempt to scrape, render, or bypass LinkedIn's login wall under any circumstances.
 
 ### source_resume_pdf
 
