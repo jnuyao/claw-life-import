@@ -25,6 +25,43 @@ back-and-forth exchanges.
 
 ---
 
+## Product Vision
+
+### North Star
+
+> Use the least intrusive approach to give Claw a sufficiently good user profile in the shortest time, significantly improving subsequent collaboration quality.
+
+claw_life_import is not just a "resume importer" — it is the **bootstrap layer** for Claw's user modeling capability stack. It solves the cold-start problem: Claw lacks a high-quality, low-friction, privacy-controlled "get to know me" entry point.
+
+### Design Principles
+
+| # | Principle | What It Means |
+|---|-----------|---------------|
+| 1 | **Trust before intelligence** | Users care more about what you wrote, why you wrote it, and whether you can undo it — than how smart the extraction is. Default behavior is conservative: preview before write, opt-in for sensitive data, full traceability. |
+| 2 | **Source Profile ≠ Assistant Memory** | Imported data is "source truth", not final memory. There is a mapping/merge layer between what was extracted and what Claw actually remembers. This enables re-import, diff, rollback, and regeneration. |
+| 3 | **From importer to user modeling workbench** | claw_life_import is Phase 1. Future skills (`claw_profile_watch`, `claw_memory_console`) will handle continuous enrichment and memory management. Together they form Claw's user understanding stack. |
+| 4 | **Skill cognitive load has an upper bound** | SKILL.md is prompt-injected into the agent's context. Beyond ~20KB, execution quality degrades. All extensions should consider splitting into multiple Skills rather than inflating a single one. |
+
+### Architecture: Two-Layer System
+
+```
+┌─────────────────────────────────────┐
+│         claw_life_import            │
+├──────────────────┬──────────────────┤
+│  Import Engine   │ Memory Sync Engine│
+│                  │                  │
+│  • Source fetch  │  • Merge policy  │
+│  • Parser        │  • De-duplication│
+│  • Extractor     │  • Source tracking│
+│  • Validator     │  • Write strategy│
+│  • Privacy class │  • Change summary│
+└──────────────────┴──────────────────┘
+```
+
+These two layers have different lifecycles: parsers grow with new data sources, while memory strategies evolve with user needs. They are logically separated in SKILL.md and designed for future physical separation.
+
+---
+
 ## 🚀 Install in OpenClaw (One Command)
 
 ### Option A: Install from ClawHub
