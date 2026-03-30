@@ -31,6 +31,22 @@ detect → parse(source-specific) → normalize & validate → privacy filter �
 
 Default behavior is **preview mode**: show what will be written, wait for user confirmation before writing anything. Use `--apply` to skip confirmation.
 
+### Architecture Note: Two-Layer System
+
+This skill's pipeline is organized into two logical layers:
+
+**Import Engine** (Steps 1-4): Responsible for fetching external data, parsing it into structured format, and validating quality.
+- Step 1: Assess → evaluate current memory state
+- Step 2: Detect → identify input format and source type
+- Step 3: Parse → fetch and extract content using source-specific parsers
+- Step 4: Normalize & Validate → standardize to CanonicalResume schema
+
+**Memory Sync Engine** (Steps 5-6): Responsible for privacy filtering, user consent, and writing to Claw's memory system.
+- Step 5: Privacy Review & Preview → classify fields, show preview, get consent
+- Step 6: Write & Report → execute writes, generate before/after report
+
+These layers have different evolution paths. When extending this skill, keep changes within the appropriate layer.
+
 ---
 
 ## Step 1: Assess Current Memory
@@ -274,6 +290,40 @@ Start from format baseline, then adjust:
 - -0.05 if web content had noise (navigation text detected)
 - Final range: 0.0 - 1.0
 
+### Evidence & Provenance
+
+Every extracted fact SHOULD carry provenance metadata when possible. When writing to MEMORY.md, attach evidence inline:
+
+**Format for MEMORY.md entries:**
+```
+## [Section Name] [source: {source_identifier} {ISO-date}] [confidence: {high|medium|low}]
+
+- Fact statement
+  > Evidence: "{original text snippet from source}" — {source_url_or_file}
+
+- Another fact
+  > Evidence: "{original text}" — {source}
+```
+
+**Evidence fields in extraction:**
+| Field | Description | Example |
+|-------|-------------|---------|
+| `source_url` | Original URL or file path | `https://yaohom.vercel.app/` |
+| `original_snippet` | Verbatim text from source (≤200 chars) | `"Led migration of 50+ micro-frontends..."` |
+| `extraction_time` | ISO 8601 timestamp | `2026-03-30T12:00:00Z` |
+| `confidence` | Extraction confidence level | `high` / `medium` / `low` |
+
+**Confidence assignment rules:**
+- **high**: Explicitly stated in source (e.g., job title in resume header)
+- **medium**: Inferred from context (e.g., skill derived from project description)
+- **low**: Ambiguous or partial information (e.g., date range unclear)
+
+**Why this matters:** When users ask "how do you know this about me?", every fact is traceable back to its source. This enables:
+- Re-importing the same source to update stale data
+- Comparing old vs new extractions
+- User verification of specific claims
+- Rollback of a single import session
+
 ---
 
 ## Step 5: Privacy Filter & Preview
@@ -389,23 +439,30 @@ Write or update these **fixed sections only**. If USER.md already exists, update
 Before appending, check if there's already a section with the same source tag. If so, **replace that section** instead of duplicating.
 
 ```markdown
-## Career Trajectory [source: {source_url_or_filename}] (imported {YYYY-MM-DD})
+## Career Trajectory [source: {source_url_or_filename} {YYYY-MM-DD}] [confidence: high]
 
 {For each experience with highlights:}
 ### {company} · {title}
-{highlights as bullet points with metrics}
+- {highlight with metrics}
+  > Evidence: "{original text from source}" — {source_url_or_file}
+
 Technologies: {technologies}
 
-## Technical Skill Landscape [source: {source}]
-{Skills grouped by domain}
+## Technical Skill Landscape [source: {source} {YYYY-MM-DD}] [confidence: high]
 
-## Known Projects [source: {source}]
+{Skills grouped by domain}
+- {skill}
+  > Evidence: "{mention in source}" — {source}
+
+## Known Projects [source: {source} {YYYY-MM-DD}] [confidence: medium]
+
 {For each project:}
 - **{name}** ({role}): {description} [{technologies}]
+  > Evidence: "{project description from source}" — {source}
 ```
 
 **Merge rules:**
-- Each imported section gets a `[source: ...]` tag in the heading.
+- Each imported section gets a `[source: ...]` tag and `[confidence: ...]` tag in the heading.
 - On re-import from the same source: replace the tagged sections.
 - On import from a different source: append new sections (don't touch existing ones).
 
