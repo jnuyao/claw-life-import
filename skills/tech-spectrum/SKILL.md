@@ -1,16 +1,16 @@
 ---
 name: tech-spectrum
-version: 1.1.0
+version: 1.2.0
 description: >
-  AI disruption positioning with project-level depth. Maps skills AND active
-  projects against AI trends, assesses exposure at role and project granularity,
-  identifies opportunity windows grounded in real work. Use when: where do I stand
-  with AI, how does AI affect me, AI career impact, AI对我的影响, 我在AI变革中的位置.
+  AI disruption positioning with project-level depth, calibrated to user's
+  technical proficiency. Maps projects against AI trends, explains AI impact
+  in terms the user actually understands. Use when: where do I stand with AI,
+  how does AI affect me, AI career impact, AI对我的影响, AI变革中的位置.
   Commands: /tech-spectrum.
   Upstream: Clawsight profile + career-mirror. Downstream: tech-compass.
 user-invocable: true
 argument-hint: (no arguments)
-metadata: { "openclaw": { "emoji": "🌈", "homepage": "https://github.com/jnuyao/clawsight", "version": "1.1.0" } }
+metadata: { "openclaw": { "emoji": "🌈", "homepage": "https://github.com/jnuyao/clawsight", "version": "1.2.0" } }
 ---
 
 # Tech Spectrum — AI 变革光谱定位
@@ -18,7 +18,7 @@ metadata: { "openclaw": { "emoji": "🌈", "homepage": "https://github.com/jnuya
 ## Quick Start
 
 ```
-/tech-spectrum          # Position yourself in the AI revolution
+/tech-spectrum          # AI positioning, explained at YOUR level
 ```
 
 Chain: `/career-mirror` → **tech-spectrum** → `/tech-compass`
@@ -26,83 +26,84 @@ Chain: `/career-mirror` → **tech-spectrum** → `/tech-compass`
 ## Mode Detection
 
 1. **Check** for `USER.md`, `MEMORY.md`, `memory/projects/*.md`.
-2. **Scan** context for `<!-- CAREER_MIRROR_OUTPUT` block.
-3. **Enhanced**: Profile + career-mirror output · **Rich**: Profile only · **Lite**: No profile.
+2. **Scan** for `<!-- CAREER_MIRROR_OUTPUT` — extract `technical_depth` field.
+3. **Enhanced**: Profile + career-mirror · **Rich**: Profile only · **Lite**: No profile.
+4. **If** `technical_depth` missing, **infer** from profile signals. See `${CLAUDE_SKILL_DIR}/docs/adaptive-depth.md`.
 
 ## Lite Mode
 
-1. **Ask** for: industry, current role, core skills, current project description.
-2. **Generate** Sections 1-2 only.
-3. **End with**: "💡 Run /career-mirror first for deeper cross-source positioning."
+1. **Ask** for: industry, current role, core skills, current project, technical background (yes/no).
+2. **Generate** Sections 1-2 only, adapted to stated background.
+3. **End with**: "💡 Run /career-mirror for depth-calibrated analysis."
+
+## Adaptive Depth Rule
+
+**Apply throughout all sections.** Reference `adaptive-depth.md` for examples.
+
+- **Technical**: Explain AI impact through architectures, protocols, implementation feasibility. Name specific technologies (MCP, RAG, LoRA). Reference papers and repos where relevant.
+- **Mixed**: Explain through tools, APIs, integration patterns. Balance conceptual depth with practical application.
+- **Non-technical**: Explain through business impact, workflow changes, analogies. Focus on "what this means for your daily work" not "how it works internally."
 
 ## Rich/Enhanced Mode — Full Report
 
-1. **Read** all memory files, career-mirror output (if present), and `${CLAUDE_SKILL_DIR}/docs/ai-trends.md`. **Never modify any file.**
+1. **Read** all memory files, career-mirror output, `${CLAUDE_SKILL_DIR}/docs/ai-trends.md`, `${CLAUDE_SKILL_DIR}/docs/adaptive-depth.md`. **Never modify any file.**
 2. **Generate** the following 5 sections.
 
 ### Section 1: AI Spectrum Position
 
-1. **Place** user on the five-level spectrum with evidence:
-   ```
-   AI-vulnerable → AI-adjacent → AI-augmented → AI-native → AI-shaping
-   ```
-2. **Score** 5 dimensions (each with evidence + confidence tag): Industry AI penetration · Role automation risk · AI tool usage signals · Tech stack AI affinity · AI learning signals.
-3. **Explain** placement with specific evidence links. No vague labels.
+1. **Place** user on: `AI-vulnerable → AI-adjacent → AI-augmented → AI-native → AI-shaping`.
+2. **Score** 5 dimensions with evidence + confidence tag.
+3. **Explain** placement using depth-appropriate language. A technical user gets "your microservices architecture maps directly to Agent orchestration patterns." A non-technical user gets "your workflow coordination experience is exactly what AI Agent systems need — someone who understands how to break complex tasks into steps."
 
 ### Section 2: Project-Level AI Exposure Scan
 
-**For each project in `memory/projects/*`**, produce a mini-analysis:
+**For each project in `memory/projects/*`**:
 
-1. **Name** the project and its core function.
-2. **Map** which of the 8 AI tracks (from ai-trends.md) directly intersect this project. State each track's current phase and acceleration.
-3. **Assess** the AI impact split: what percentage of this project's workflow is automatable vs augmentable vs AI-immune? Be specific about which tasks fall where.
-4. **Identify** the most likely AI disruption scenario: What specific AI capability (e.g., "Agent-based reconciliation", "LLM-powered anomaly detection") could transform this project, and what's the timeline?
-5. **Rate** urgency: 🔴 <6 months · 🟡 6-18 months · 🟢 18+ months.
-
-> This is the deepest section. Go beyond role-level analysis into the user's actual daily work. Tag [data-based] for profile-derived, [general-knowledge] for LLM inference.
+1. **Map** intersecting AI tracks (from ai-trends.md) with current phase + acceleration.
+2. **Assess** automatable vs augmentable vs AI-immune task split. Be specific about which tasks.
+3. **Describe** the most likely AI disruption scenario for THIS project:
+   - **Technical users**: Name the specific technology (e.g., "Agent-based reconciliation using MCP + structured output") and implementation path.
+   - **Non-technical users**: Describe the outcome (e.g., "An AI assistant that handles 80% of routine reconciliation, flagging only edge cases for human review").
+4. **Rate** urgency: 🔴 <6mo · 🟡 6-18mo · 🟢 18+mo.
 
 ### Section 3: Trend × Profile Intersection
 
-**Reference** ai-trends.md for the 8 tracks. Produce:
+Reference ai-trends.md. Produce:
 
-1. **Relevance table**: which tracks matter most, with phase + acceleration.
-2. **Convergence points**: For each, state the specific project or skill + the specific AI trend + why this intersection creates value + market signal. Must reference actual projects from memory/projects/.
-3. **Divergence risks**: where current project trajectory drifts from AI trends. Severity + time horizon.
-4. **Opportunity windows**: your unique position + trend support + window estimate + scarcity. State whether window is opening or closing and the evidence.
+1. **Relevance table**: tracks that matter most, with phase + acceleration.
+2. **Convergence points**: specific project/skill + AI trend + why this creates value. Must reference actual projects.
+3. **Divergence risks**: where trajectory drifts from AI trends. Severity + timeline.
+4. **Opportunity windows**: unique position + scarcity + opening/closing status.
 
 ### Section 4: Stage-Aware Perspective
 
-Different career stages face different AI pressures. Based on the user's career phase (from career-mirror or inferred):
-
-1. **State** what users at this career stage should worry about vs. not.
-2. **Reframe** anxiety → opportunity: specific, evidence-grounded, not generic reassurance.
-3. **Name** the single biggest leverage point for this user at this stage.
+1. **State** what users at this career stage + proficiency level should/shouldn't worry about.
+2. **Reframe** anxiety → opportunity with evidence.
+3. **Name** the single biggest leverage point for this user.
 
 ### Section 5: Cross-Project Pattern
 
-If 2+ projects analyzed: **Identify** patterns across projects that reveal the user's strategic position. Are their projects converging toward AI relevance or diverging from it? What compound positioning emerges when you look across all projects?
+If 2+ projects: **Identify** strategic patterns. Are projects converging toward or diverging from AI relevance?
 
 ## Report Footer & Data Passing
 
 ```
-*Generated by Tech Spectrum v1.1 | A coordinate system, not a verdict. → /tech-compass*
+*Generated by Tech Spectrum v1.2 | A coordinate system, not a verdict. → /tech-compass*
 ```
 
-**Append** (invisible to user):
+**Append** (invisible):
 ```html
 <!-- TECH_SPECTRUM_OUTPUT
-version: 1.1
+version: 1.2
 date: {ISO date}
+technical_depth: "{technical/mixed/non-technical}"
 spectrum_position: "{level}"
-ai_exposure:
-  industry_penetration: "{H/M/L}"
-  role_automation_risk: "{H/M/L}"
-  augmentation_opportunity: "{H/M/L}"
 project_exposures:
   - project: "{name}"
-    intersecting_tracks: ["{track}"]
+    tracks: ["{track}"]
     urgency: "{red/yellow/green}"
     ai_scenario: "{description}"
+    ai_scenario_technical: "{implementation details if technical}"
 relevant_tracks: ["{numbers}"]
 convergence_points:
   - capability: "{skill/project}"
@@ -111,7 +112,6 @@ opportunity_windows:
   - name: "{name}"
     scarcity: "{assessment}"
     window: "{timeframe}"
-    status: "{opening/closing}"
 -->
 ```
 
@@ -119,17 +119,16 @@ opportunity_windows:
 
 | Situation | Response | Then |
 |-----------|----------|------|
-| No memory files | — | Switch to Lite Mode |
-| Career-mirror output missing | Generate without upstream | Note depth limitation |
-| No projects in memory/ | Skip Section 2, 5 | Ask: "Describe your current project" |
-| ai-trends.md missing | Use LLM general knowledge | Tag all [general-knowledge] |
+| No memory files | — | Lite Mode |
+| Career-mirror missing | Infer proficiency from profile | Note depth limitation |
+| No projects in memory/ | Skip Section 2, 5 | Ask user to describe project |
+| ai-trends.md missing | Use LLM knowledge | Tag [general-knowledge] |
 
 ## Constraints
 
-1. **Evidence-first.** Link claims to profile data or tag [general-knowledge].
-2. **Project-specific > role-generic.** Always prefer concrete project analysis over abstract role labels.
-3. **Honest over comfortable.** If AI-vulnerable, say so — with actionable framing.
-4. **Read-only.** Never modify memory files.
-5. **No false precision.** Ranges and qualitative assessments, not invented percentages.
-6. **Match user language.** Output in user's primary language.
-7. **Scope boundary.** No learning paths or action plans — that's tech-compass.
+1. **Evidence-first.** Link to profile data or tag [general-knowledge].
+2. **Project-specific > role-generic.**
+3. **Adaptive depth.** EVERY AI concept explained at user's level. Never assume technical knowledge for non-technical users. Never oversimplify for technical users.
+4. **Honest over comfortable.** AI-vulnerable → say so, with actionable framing.
+5. **Read-only.** Never modify memory files.
+6. **Scope boundary.** No learning paths or action plans — that's tech-compass.

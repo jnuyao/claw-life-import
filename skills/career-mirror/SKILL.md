@@ -1,16 +1,16 @@
 ---
 name: career-mirror
-version: 2.1.0
+version: 2.2.0
 description: >
-  Career introspection with AI-era context overlay. Analyzes career trajectory
-  against AI development history, verifies advantages across sources, discovers
-  behavioral patterns and blind spots. Use when: analyze my career, what are my
-  strengths, career review, skill audit, 分析我的职业, 我的优势是什么, 职业复盘.
+  Career introspection with AI-era context and adaptive depth. Analyzes career
+  against AI history, verifies advantages, detects technical proficiency to
+  calibrate all downstream skills. Use when: analyze my career, strengths,
+  career review, skill audit, 分析职业, 优势分析, 职业复盘.
   Commands: /career-mirror.
   Upstream: Clawsight profile. Downstream: tech-spectrum, tech-compass.
 user-invocable: true
 argument-hint: (no arguments)
-metadata: { "openclaw": { "emoji": "🪞", "homepage": "https://github.com/jnuyao/clawsight", "version": "2.1.0" } }
+metadata: { "openclaw": { "emoji": "🪞", "homepage": "https://github.com/jnuyao/clawsight", "version": "2.2.0" } }
 ---
 
 # Career Mirror — 职业内省镜
@@ -18,7 +18,7 @@ metadata: { "openclaw": { "emoji": "🪞", "homepage": "https://github.com/jnuya
 ## Quick Start
 
 ```
-/career-mirror          # Full introspection with AI-era context
+/career-mirror          # Introspection with AI-era context, calibrated to your depth
 ```
 
 Chain: **career-mirror** → `/tech-spectrum` → `/tech-compass`
@@ -26,29 +26,42 @@ Chain: **career-mirror** → `/tech-spectrum` → `/tech-compass`
 ## Mode Detection
 
 1. **Check** for `USER.md`, `MEMORY.md`, `memory/projects/*.md`.
-2. **If** ≥1 source → **Rich Mode** (5 sections). **Else** → **Lite Mode**.
+2. **If** ≥1 source → **Rich Mode** (6 sections). **Else** → **Lite Mode**.
 
 ## Lite Mode
 
 1. **Ask** for: current role + years, 3-5 core skills, one career question.
-2. **Generate** Sections 1-2 only, without cross-source or AI timeline analysis.
+2. **Generate** Sections 1-3 only, without cross-source or AI timeline.
 3. **End with**: "💡 Import sources for cross-source depth."
 
 ## Rich Mode — Full Report
 
-1. **Read** all memory files + `${CLAUDE_SKILL_DIR}/docs/ai-trends.md`. **Never modify any file.**
-2. **Generate** the following 5 sections.
+1. **Read** all memory files + `${CLAUDE_SKILL_DIR}/docs/ai-trends.md` + `${CLAUDE_SKILL_DIR}/docs/adaptive-depth.md`. **Never modify any file.**
+2. **Generate** the following 6 sections.
+
+### Section 0: Proficiency Detection (silent — do not output)
+
+**Detect** user's technical depth from behavioral evidence. Reference `adaptive-depth.md` detection logic.
+
+| Signal | Check |
+|--------|-------|
+| GitHub repos with code? | Languages, complexity, AI-related code |
+| Role keywords | engineer/developer vs PM/analyst vs operations/marketing |
+| AI tool evidence | API calls/fine-tuning vs tool usage vs none |
+
+**Classify**: `technical` · `mixed` · `non-technical`. This determines how you explain AI concepts in ALL subsequent sections. Store in output block for downstream skills.
 
 ### Section 1: Career Arc × AI Timeline
 
-1. **Map** career as phases, each annotated with its AI development stage:
+1. **Map** career phases, each annotated with AI development stage:
    ```
-   Phase 1: {label} ({years}) — {achievement}  [AI: {奠基期/突破期/爆发期/深化期}]
+   Phase 1: {label} ({years}) — {achievement}  [AI: {stage}]
        ↓ Pivot: {trigger}
    Phase N: Current  [AI: Agent & 应用深化期]
    ```
-2. **Analyze timing**: For each phase, state what AI capabilities existed and didn't. Identify where user was ahead of the wave, behind it, or riding it.
-3. **Flag** consistency thread, acceleration signals, unfinished transitions.
+2. **Adapt milestone explanations to proficiency**: For technical users, reference architecture/implementation details. For non-technical, use analogies and business impact framing. See `adaptive-depth.md` examples.
+3. **Analyze timing**: Where user was ahead/behind/riding the AI wave.
+4. **Flag** consistency thread, acceleration signals, unfinished transitions.
 
 ### Section 2: Compound Advantage × AI Value Trajectory
 
@@ -58,34 +71,34 @@ Chain: **career-mirror** → `/tech-spectrum` → `/tech-compass`
 |------------|:---:|:---:|:---:|:---:|:---:|
 | {skill} | ✅/❌ | ✅/❌ | ✅/❌/— | ⭐/⚠️/❓ | 📈/📉/➡️ |
 
-⭐ Triple-verified · ⚠️ Declared-only · ❓ Behavioral-only
-📈 AI amplifies this advantage · 📉 AI erodes this advantage · ➡️ Stable
+📈 AI amplifies · 📉 AI erodes · ➡️ Stable
 
-2. **State** primary advantage + rarity assessment with evidence.
-3. **For each verified advantage**: Is it appreciating or depreciating as AI evolves? Reference specific developments from ai-trends.md. This is the most important column.
-4. **List** secondary advantages that amplify the primary.
+2. **State** primary advantage + rarity + evidence.
+3. **Assess AI trajectory** for each: is this advantage becoming more/less valuable? Reference specific AI track developments.
+4. **List** secondary advantages.
 
 ### Section 3: Behavioral Truth
 
 1. **Identify** Declaration-Behavior Gaps. Frame as "unrecognized shifts."
-2. **Build** Work Style Portrait: rhythm, builder/maintainer ratio, collaboration, learning signals — all evidence-linked.
+2. **Build** Work Style Portrait with evidence-linked signals.
+3. **For technical users**: Note implementation depth signals — do they understand concepts or also build? (Repos with original implementations vs. tutorial clones vs. tool usage only.)
 
 ### Section 4: Blind Spot Map
 
-1. **Surface** undervalued capabilities (in data but poorly articulated).
-2. **Identify** narrative gaps (important chapters missing from career story).
-3. **Flag AI-specific blind spots**: domains heavily targeted by AI where user shows zero AI engagement in behavioral data. Be specific: name the AI track and its current stage.
-4. **Flag** cognitive bias signals.
+1. **Surface** undervalued capabilities.
+2. **Identify** narrative gaps.
+3. **AI-specific blind spots**: domains heavily AI-impacted but user shows zero AI engagement. Name the specific AI track and stage.
+4. **Depth blind spots**: Is user stuck at "using AI tools" (L0-L1) when their background could support "building with AI" (L2+)? Or vice versa — trying to build when they should focus on strategic integration?
 
 ### Section 5: Career Moment Assessment
 
-1. **State** which AI stage the user's skill profile is aligned with vs. where the industry is now. Gap = urgency signal.
-2. **Deliver** the single most important insight — the one thing the user most needs to hear but probably hasn't considered.
+1. **State** AI stage alignment gap (user's skill profile era vs actual industry era).
+2. **Deliver** the single most important insight the user hasn't considered.
 
 ## Report Footer
 
 ```
-*Generated by Career Mirror v2.1 | A mirror, not a map. → /tech-spectrum*
+*Generated by Career Mirror v2.2 | A mirror, not a map. → /tech-spectrum*
 ```
 
 ## Cross-Skill Data Passing
@@ -94,8 +107,9 @@ Chain: **career-mirror** → `/tech-spectrum` → `/tech-compass`
 
 ```html
 <!-- CAREER_MIRROR_OUTPUT
-version: 2.1
+version: 2.2
 date: {ISO date}
+technical_depth: "{technical/mixed/non-technical}"
 compound_advantages:
   primary: "{description}"
   secondary: ["{s1}", "{s2}"]
@@ -104,8 +118,9 @@ compound_advantages:
 behavioral_pattern:
   type: "{Builder/Maintainer/Hybrid}"
   collaboration: {0.0-1.0}
+  implementation_depth: "{implements-from-scratch/uses-frameworks/uses-tools-only}"
 career_phase: "{current phase}"
-ai_era_alignment: "{which AI stage user operates in}"
+ai_era_alignment: "{which AI stage}"
 blind_spots: ["{b1}", "{b2}"]
 ai_blind_spots: ["{ab1}"]
 verification:
@@ -121,17 +136,16 @@ projects: ["{project names}"]
 
 | Situation | Response | Then |
 |-----------|----------|------|
-| No memory files | — | Switch to Lite Mode |
-| ai-trends.md missing | Skip AI overlay | Note: "AI context unavailable" |
-| Single source only | Skip cross-source | Note: "Single-source analysis" |
-| No projects in memory/ | Skip project insights | Note: "Import projects for depth" |
+| No memory files | — | Lite Mode |
+| ai-trends.md missing | Skip AI overlay | Note limitation |
+| Single source only | Skip cross-source | Note limitation |
+| Can't determine proficiency | Default to `mixed` | Ask clarifying question |
 
 ## Constraints
 
-1. **Evidence-first.** Every claim cites a data point. No fabrication.
+1. **Evidence-first.** Every claim cites a data point.
 2. **Observe, don't prescribe.** "This suggests..." not "You should..."
 3. **Read-only.** Never write to memory files.
-4. **Constructive framing.** Gaps = insights, not errors.
+4. **Adaptive depth.** Calibrate ALL AI explanations to detected proficiency.
 5. **Match user language.** Output in profile's primary language.
-6. **Mark confidence.** Tag [multi-source], [single-source], or [general-knowledge].
-7. **Scope boundary.** No direction suggestions — that's tech-spectrum/tech-compass.
+6. **Scope boundary.** No direction suggestions — that's downstream skills.

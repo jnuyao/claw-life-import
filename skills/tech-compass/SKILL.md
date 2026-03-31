@@ -1,16 +1,15 @@
 ---
 name: tech-compass
-version: 1.1.0
+version: 1.2.0
 description: >
-  AI-era growth planning grounded in current projects. Builds action plans
-  using active projects as launchpads. Assesses
-  AI skill layer, maps skill quadrants, creates 30-60-90 day plans tied to real work.
-  Use when: what should I learn, tech growth plan, learning roadmap, skill gap,
-  我该学什么, 技术成长路线, 学习路径. Commands: /tech-compass.
+  AI-era growth planning calibrated to technical depth. Implementation
+  projects for engineers, tool adoption for non-technical users, cognition
+  verification at every level. Projects as launchpads. Use when: what to learn, growth plan, roadmap, skill gap,
+  我该学什么, 成长路线, 学习路径. Commands: /tech-compass.
   Upstream: Clawsight profile + career-mirror + tech-spectrum.
 user-invocable: true
 argument-hint: (no arguments)
-metadata: { "openclaw": { "emoji": "🧭", "homepage": "https://github.com/jnuyao/clawsight", "version": "1.1.0" } }
+metadata: { "openclaw": { "emoji": "🧭", "homepage": "https://github.com/jnuyao/clawsight", "version": "1.2.0" } }
 ---
 
 # Tech Compass — 技术成长导航
@@ -18,7 +17,7 @@ metadata: { "openclaw": { "emoji": "🧭", "homepage": "https://github.com/jnuya
 ## Quick Start
 
 ```
-/tech-compass           # Growth plan grounded in your real projects
+/tech-compass           # Growth plan at YOUR depth, in YOUR projects
 ```
 
 Chain: `/career-mirror` → `/tech-spectrum` → **tech-compass**
@@ -26,81 +25,79 @@ Chain: `/career-mirror` → `/tech-spectrum` → **tech-compass**
 ## Mode Detection
 
 1. **Check** for `USER.md`, `MEMORY.md`, `memory/projects/*.md`.
-2. **Scan** context for `<!-- CAREER_MIRROR_OUTPUT` and `<!-- TECH_SPECTRUM_OUTPUT`.
-3. **Enhanced**: Profile + both upstreams · **Rich**: Profile only · **Lite**: No profile.
+2. **Scan** for `<!-- CAREER_MIRROR_OUTPUT` and `<!-- TECH_SPECTRUM_OUTPUT`.
+3. **Extract** `technical_depth` from upstream. If missing, infer or default to `mixed`.
+4. **Enhanced**: Profile + both upstreams · **Rich**: Profile only · **Lite**: No profile.
 
 ## Lite Mode
 
-1. **Ask** for: current role, tech stack, current project (what it does), target direction, available hours/week.
+1. **Ask** for: role, tech stack, current project, target direction, hours/week, technical background (yes/no).
 2. **Generate** Sections 1 and 4 only.
-3. **End with**: "💡 Run the full chain for project-grounded navigation."
+
+## Adaptive Depth Rule
+
+**This is the most critical rule in tech-compass.** Reference `${CLAUDE_SKILL_DIR}/docs/adaptive-depth.md`.
+
+- **Technical users**: Recommend repos (nanoGPT, llama.cpp, LangChain), papers, implementation challenges. Verify: "Can you implement this from scratch?"
+- **Mixed users**: Recommend tutorials, API integrations, tool-building. Verify: "Can you solve a real problem with this?"
+- **Non-technical users**: Recommend tools (ChatGPT, Zapier AI, Custom GPTs), workflow changes, conceptual understanding. Verify: "Can you explain this to a colleague and identify where it applies?"
 
 ## Rich/Enhanced Mode — Full Report
 
-1. **Read** all memory files, upstream outputs, and `${CLAUDE_SKILL_DIR}/docs/skill-layers.md`. **Never modify any file.**
+1. **Read** all memory files, upstream outputs, `${CLAUDE_SKILL_DIR}/docs/skill-layers.md`, `${CLAUDE_SKILL_DIR}/docs/adaptive-depth.md`. **Never modify any file.**
 2. **Generate** the following 5 sections.
 
 ### Section 1: Skill Quadrant Matrix
 
-1. **Map** each skill onto the 2×2 grid:
-   - X "Your Level": from career-mirror verification (triple-verified=high, declared-only=low).
-   - Y "Market Demand": [general-knowledge] or [real-time] from APIs.
-2. **Classify**: 💎 Core Asset (high/high) · 🎯 Priority Investment (low/high) · 🏛️ Moat (high/low) · ⏸️ Deprioritize (low/low).
-3. **List** 2-4 skills per quadrant with evidence.
-4. **Assess** T-Shape: current (I/T/π/Comb) → recommended evolution.
+1. **Map** skills: X = Your Level (verification data), Y = Market Demand.
+2. **Classify**: 💎 Core Asset · 🎯 Priority Investment · 🏛️ Moat · ⏸️ Deprioritize.
+3. **Assess** shape: current (I/T/π/Comb) → recommended evolution.
 
 ### Section 2: AI Skill Layer Assessment
 
-1. **Place** on L0-L4 with evidence per layer:
-
-| Layer | Your Evidence | Priority |
-|-------|---------------|:---:|
-| L0: AI User | {evidence} | {H/M/L} |
-| L1: AI Integrator | {evidence} | {H/M/L} |
-| L2: AI Builder | {evidence} | {H/M/L} |
-| L3: AI Architect | {evidence} | {H/M/L} |
-| L4: AI Definer | {evidence} | {H/M/L} |
-
-2. **State** current layer → target layer → gap skills. Reference skill-layers.md.
-3. **Calibrate target** by career phase. Not everyone needs L4.
+1. **Place** on L0-L4 with evidence. Reference skill-layers.md.
+2. **State** current → target → gap. Calibrate target by career phase.
+3. **For technical users**: Distinguish "understands concept" vs "can implement." E.g., "You use RAG tools (L1) but haven't built a retrieval pipeline from scratch (L2 gap)."
+4. **For non-technical users**: Frame layers as impact levels, not technical skill. E.g., "L1 = you use AI to do your job faster. L2 = you design AI-powered workflows for your team."
 
 ### Section 3: Project-as-Launchpad Routes
 
-**Core principle**: The fastest way to build AI skills is to embed them in projects you're already doing, not take external courses in isolation.
+**Core principle**: Learn by building in projects you already own. For each project from tech-spectrum, design a depth-appropriate AI integration:
 
-1. **For each project from tech-spectrum's exposure scan**, design an AI integration opportunity:
-   - **What to build**: A specific AI-powered feature or improvement for THIS project.
-   - **Skills it develops**: Which L→L+1 gap skills this addresses.
-   - **Why this project**: Why this is the right vehicle (existing domain knowledge, access to data, visible impact).
-   - **Effort**: time estimate and prerequisites.
+**Technical users:**
+- **What to build**: Specific implementation (e.g., "RAG pipeline for your reconciliation docs using LangChain + Chroma").
+- **Study first**: Specific repo or paper (e.g., "Study nanoGPT for attention fundamentals, then Annotated Transformer for implementation patterns").
+- **Verify understanding**: "You'll know you get it when you can modify the attention mechanism and predict what changes in output."
 
-2. **Generate** 2-3 routes. Each route should:
-   - Start from a specific project, not a course.
-   - **Monthly milestones**: Month 1 (prototype in current project) → Month 2-3 (expand + refine) → Month 4-6 (demonstrate impact). Each: Build, Learn (just-in-time), Verify.
-   - Include ONE external resource per month (tutorial, paper, tool) directly relevant to that month's build task.
+**Non-technical users:**
+- **What to adopt**: Specific tool or workflow change (e.g., "Set up a Custom GPT trained on your team's SOPs for instant onboarding Q&A").
+- **Understand first**: Concept framed as analogy (e.g., "RAG = giving AI a reference book. Your reconciliation docs become the AI's study guide.").
+- **Verify understanding**: "You'll know you get it when you can explain to your manager why this saves 10 hours/week and what it can't handle."
 
-3. **Build** route comparison: alignment, demand trajectory, effort, risk, window urgency.
+2-3 routes with monthly milestones. Each: Build, Learn (just-in-time), Verify.
 
 ### Section 4: 30-60-90 Day Action Plan
 
-Every action must reference a specific project or deliverable:
+Every action ties to a project AND matches proficiency:
 
-1. **🔴 This Week** (2 actions): Zero-prerequisite, can start today. E.g., "Add LLM-based log analysis to {project X} — start with the OpenAI API quickstart, feed it 100 sample logs, evaluate output quality."
-2. **🟡 30-Day Target**: Measurable goal tied to a project. Verification method. E.g., "Working prototype of AI-assisted {feature} in {project}, demoed to team."
-3. **🟢 90-Day Milestone**: Significant outcome with expected spectrum position shift. E.g., "Move from L1→L2 evidenced by shipping AI-powered {feature} to production."
+1. **🔴 This Week** (2 actions):
+   - Technical: "Clone nanoGPT, run training on your domain data, trace the attention computation."
+   - Non-technical: "Use ChatGPT to draft 5 reconciliation dispute responses, compare quality vs manual."
+2. **🟡 30-Day**: Measurable goal + verification method.
+3. **🟢 90-Day**: Outcome + expected spectrum position shift.
 
-> Anti-pattern: any action that says "take a course" without a project connection must be rewritten.
+> Any action that says "take a course" without a project connection must be rewritten.
 
 ### Section 5: Risk & Adaptation
 
-1. **For each route**: warning signals it isn't working, pivot direction, salvageable value.
-2. **If AI trends shift**: signals to monitor, adaptation strategy.
-3. **No project access?** Fallback: personal project using same AI techniques on open-source domain replicas.
+1. **Per route**: warning signals, pivot, salvageable value.
+2. **Trend shift?** Signals to monitor + adaptation.
+3. **No project access?** Open-source domain replicas as fallback.
 
 ## Report Footer
 
 ```
-*Generated by Tech Compass v1.1 | A map, not a rail.*
+*Generated by Tech Compass v1.2 | A map, not a rail.*
 *Re-run: /clawsight refresh → /career-mirror → /tech-spectrum → /tech-compass*
 ```
 
@@ -108,18 +105,16 @@ Every action must reference a specific project or deliverable:
 
 | Situation | Response | Then |
 |-----------|----------|------|
-| No memory files | — | Switch to Lite Mode |
-| Both upstreams missing | Generate without upstream | Note: "Run full chain for best results" |
-| No projects in memory/ | Ask user to describe current project | Use response for Section 3-4 |
-| skill-layers.md missing | Use inline L0-L4 descriptions | Continue |
-| User has no clear direction | Generate all routes as options | Ask: "Which resonates most?" |
+| No memory files | — | Lite Mode |
+| Upstreams missing | Generate without | Note: "Full chain for best results" |
+| No projects | Ask user to describe one | Use for Section 3-4 |
+| Proficiency unclear | Default `mixed` | Ask: "Are you comfortable reading code?" |
 
 ## Constraints
 
-1. **Project-grounded specificity.** Every recommendation ties to a real project. Not "learn RAG" but "build a RAG pipeline for {user's project X}'s {specific use case}."
-2. **Evidence-linked.** Trace recommendations to profile or upstream data.
-3. **Read-only.** Never modify memory files.
-4. **Honest difficulty.** Don't sugar-coat learning curves.
-5. **Respect autonomy.** Routes are options, not mandates.
+1. **Proficiency-calibrated.** EVERY recommendation matches user's depth. Never tell non-technical users to "read the paper." Never tell engineers to just "use the tool."
+2. **Project-grounded.** Tie to real projects. Not "learn RAG" but "build RAG for {project X}."
+3. **Cognition-verified.** Every milestone includes a "you'll know you understand when..." check appropriate to the user's level.
+4. **Evidence-linked.** Trace to profile or upstream data.
+5. **Read-only.** Never modify memory files.
 6. **Match user language.** Output in user's primary language.
-7. **Scope boundary.** Action only. Self-knowledge from career-mirror, positioning from tech-spectrum.
