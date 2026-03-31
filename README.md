@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-  <strong>Multi-source AI profile intelligence — cross-reference your data, discover your hidden strengths.</strong>
+  <strong>Cross-source career intelligence for the AI era — know yourself, find your position, take action.</strong>
 </p>
 
 <p align="center">
@@ -15,213 +15,207 @@
 
 ---
 
-**Resume analyzers look at one source. Clawsight cross-references all of them.**
+Your resume says "Java lead" but your GitHub is 90% Go. Three LinkedIn recommenders highlight your mentoring, yet your resume never mentions leadership. You sit at the intersection of payment systems × distributed architecture × global ops — a combination held by fewer than 2% of senior engineers. And in an AI revolution reshaping every career, you have no idea whether your next move should be doubling down or pivoting.
 
-Your resume says "Java lead" but your GitHub is 90% Go. Three LinkedIn recommenders mention mentoring, but your resume never says "leadership." You have payment systems + distributed architecture + global experience — a triple combination that's extremely rare. These insights are invisible from any single source. They only emerge when you look across data streams.
+**These insights are invisible from any single source. They only emerge when you look across data streams — and map them against the forces reshaping your industry.**
 
-Named after the **Mantis Shrimp** (螳螂虾) — the creature with 16 types of color receptors that sees dimensions invisible to all other animals. Clawsight does the same for your professional identity.
+Clawsight does exactly that. Named after the **Mantis Shrimp** 🦐 — the creature with 16 types of color receptors that sees dimensions invisible to all other species.
 
 ## Quick Start
 
 ```bash
-# Install (one-time)
+# 1. Install
 /install clawsight
 
-# Import sources
+# 2. Import your data (the more sources, the sharper the insight)
 /clawsight resume.pdf
 /clawsight https://github.com/yourusername
+/clawsight linkedin.zip
 
-# Discover insights (needs 2+ sources)
-/clawsight insight
-
-# Map your future potential
-/clawsight potential
+# 3. Run the Career Intelligence Chain
+/career-mirror       # Who am I really? (introspection)
+/tech-spectrum       # Where do I stand in the AI revolution? (positioning)
+/tech-compass        # What do I do next? (action plan)
 ```
 
-## Demo Output
+No data? Every skill works in **Lite Mode** too — just with interactive Q&A instead of cross-source depth.
 
-After importing a resume + GitHub profile, `/clawsight insight` produces:
+## The Career Intelligence Chain
 
-```
-╔══════════════════════════════════════════════════════════╗
-║  🔍 Cross-Source Insight: Behavioral-Declarative Gap     ║
-╠══════════════════════════════════════════════════════════╣
-║  Resume: "Backend Engineer, Java"                        ║
-║  GitHub: 47 repos, 92% Go, contributor to 3 CNCF projects║
-║                                                          ║
-║  → Your identity has shifted to Go/cloud-native, but     ║
-║    your resume still tells a Java story.                 ║
-║    This gap may cost you roles you're already qualified  ║
-║    for.                                                  ║
-╚══════════════════════════════════════════════════════════╝
-
-╔══════════════════════════════════════════════════════════╗
-║  💎 Compound Advantage (rare combination)                ║
-╠══════════════════════════════════════════════════════════╣
-║  Payment Systems × Distributed Arch × Global Ops         ║
-║  Market rarity: top 2% of senior engineers               ║
-║                                                          ║
-║  → This triple stack is in extreme demand for fintech    ║
-║    companies expanding internationally.                  ║
-╚══════════════════════════════════════════════════════════╝
-```
-
-## What It Does
-
-Clawsight operates through three intelligence layers:
-
-| Layer | Command | What You Get |
-|-------|---------|-------------|
-| **Profile** | `/clawsight <source>` | Multi-source import with cross-correlation |
-| **Insight** | `/clawsight insight` | Hidden strengths, blind spots, behavioral-declarative gaps |
-| **Potential** | `/clawsight potential` | Compound advantages × industry trends mapping |
-
-### Supported Sources
-
-| Source | Command | What It Captures |
-|--------|---------|-----------------|
-| Resume (PDF/text) | `/clawsight resume.pdf` | Career narrative, skills, achievements |
-| GitHub | `/clawsight https://github.com/user` | Real tech stack, contribution patterns, projects |
-| LinkedIn export | `/clawsight linkedin.zip` | Endorsements, recommendations, network signals |
-| Personal website | `/clawsight https://yoursite.com` | Self-presentation, projects, writing |
-| JSON Resume | `/clawsight resume.json` | Structured profile data |
-
-> **LinkedIn Note**: Automated access is blocked by LinkedIn. Export your data via **Settings → Get a copy of your data** — Clawsight will parse the ZIP. See [docs/linkedin-guide.md](docs/linkedin-guide.md) for step-by-step instructions.
-
-### Additional Commands
-
-| Command | Description |
-|---------|-------------|
-| `/clawsight score` | Profile completeness and understanding level |
-| `/clawsight refresh` | Re-fetch all sources, detect changes over time |
-
-## How It Works
+This is Clawsight's core value proposition: a three-skill pipeline that takes you from self-knowledge to concrete action.
 
 ```
- ┌─────────┐  ┌─────────┐  ┌─────────┐  ┌─────────┐
- │ Resume  │  │ GitHub  │  │LinkedIn │  │ Website │
- └────┬────┘  └────┬────┘  └────┬────┘  └────┬────┘
-      │            │            │             │
-      └──────────┬─┴────────────┴─────────────┘
-                 ▼
-       ┌─────────────────────┐
-       │  Parse & Normalize  │
-       └─────────┬───────────┘
-                 ▼
-       ┌─────────────────────┐
-       │  Cross-Source        │  ★ Core differentiator
-       │  Reconciliation      │  Classifies 5 conflict types,
-       │  Engine              │  resolves 4 automatically,
-       └─────────┬───────────┘  turns contradictions → insights
-                 ▼
-       ┌─────────────────────┐
-       │  ⛔ Privacy Preview  │  User confirms before any write
-       └─────────┬───────────┘
-                 ▼
-    ┌────────────┼────────────┐
-    ▼            ▼            ▼
-┌────────┐ ┌──────────┐ ┌───────────┐
-│USER.md │ │MEMORY.md │ │projects/* │
-└────────┘ └──────────┘ └───────────┘
-                 │
-    ┌────────────┼─────────────────┐
-    ▼            ▼                 ▼
-┌─────────┐ ┌───────────┐ ┌──────────────┐
-│ Insight │ │ Potential │ │ Scene Skills │
-│ Engine  │ │ Discovery │ │  Ecosystem   │
-└─────────┘ └───────────┘ └──────────────┘
+  🪞 career-mirror          🌈 tech-spectrum          🧭 tech-compass
+  ─────────────────    →    ─────────────────    →    ─────────────────
+  "Who am I really?"        "Where do I stand         "What do I do
+                             in the AI era?"            next?"
+
+  ▸ Career Arc              ▸ Five-Level Spectrum      ▸ Skill Quadrant Matrix
+  ▸ Advantage Verification  ▸ AI Exposure Analysis     ▸ AI Skill Layer (L0→L4)
+  ▸ Behavioral Truth        ▸ Trend × Profile Match    ▸ Learning Routes
+  ▸ Blind Spot Map          ▸ Opportunity Windows      ▸ 30-60-90 Day Plan
 ```
 
-See [docs/architecture.md](docs/architecture.md) for the full technical deep dive.
+Each skill automatically passes structured data downstream, so the chain builds on itself:
 
-## Scene Skills — Career Intelligence Chain
-
-Clawsight generates profile data. **Scene Skills** consume it for specialized analysis. The **Career Intelligence Chain** is a three-skill pipeline that turns self-knowledge into action:
-
-```
-career-mirror (内省)  →  tech-spectrum (定位)  →  tech-compass (行动)
-   "Where am I?"          "Where do I stand        "What do I do
-                           in the AI era?"           next?"
-```
-
-| Skill | Command | What It Does | Status |
-|-------|---------|-------------|--------|
-| [career-mirror](skills/career-mirror/) | `/career-mirror` | Career introspection with triple-source advantage verification | ✅ v2.0 |
-| [tech-spectrum](skills/tech-spectrum/) | `/tech-spectrum` | AI disruption positioning — five-level spectrum from AI-vulnerable to AI-shaping | ✅ v1.0 |
-| [tech-compass](skills/tech-compass/) | `/tech-compass` | Action planning with Skill Quadrant Matrix and 30-60-90 day plans | ✅ v1.0 |
+| Skill | Command | Input | Output |
+|-------|---------|-------|--------|
+| **[career-mirror](skills/career-mirror/)** | `/career-mirror` | Clawsight profile | Verified advantages, behavioral patterns, blind spots |
+| **[tech-spectrum](skills/tech-spectrum/)** | `/tech-spectrum` | Profile + career-mirror | AI spectrum position, exposure analysis, opportunity windows |
+| **[tech-compass](skills/tech-compass/)** | `/tech-compass` | Profile + both upstreams | Skill quadrant, AI skill layer, action plan |
 
 ### Three Operating Modes
 
-Each Scene Skill adapts to available data:
+Every Scene Skill adapts to what's available:
 
-| Mode | Condition | Experience |
-|------|-----------|------------|
-| **Enhanced** | Profile + upstream skill outputs | Full chain analysis with cross-validated data |
-| **Rich** | Clawsight profile available | Profile-driven analysis |
-| **Lite** | No profile data | Interactive Q&A, still useful |
+| Mode | When | Experience |
+|------|------|------------|
+| **Enhanced** | Profile + upstream skill outputs | Full chain with cross-validated intelligence |
+| **Rich** | Clawsight profile only | Profile-driven analysis, no upstream data |
+| **Lite** | Nothing imported | Interactive Q&A — still useful, just less precise |
 
-### Cross-Skill Data Flow
+## What Clawsight Sees That You Can't
 
-Skills pass structured data via hidden HTML comment blocks at the end of reports:
+### Cross-Source Reconciliation
+
+The engine behind everything. When you import 2+ sources, Clawsight doesn't just merge — it **cross-references**:
 
 ```
-career-mirror output  →  <!-- CAREER_MIRROR_OUTPUT ... -->
-tech-spectrum output  →  <!-- TECH_SPECTRUM_OUTPUT ... -->
-                              ↓
-                         tech-compass reads both
+Resume says: "Java Lead, 8 years"
+GitHub shows: 47 repos, 92% Go, 3 CNCF contributions
+LinkedIn recs: "exceptional mentoring", "natural leader"
+
+Clawsight sees:
+  → Behavioral-Declarative Gap: identity shifted to Go, resume tells Java story
+  → Hidden Strength: leadership evidenced by others but never self-claimed
+  → Compound Advantage: payments × distributed × global = rare triple stack
 ```
 
-See [docs/scene-skills-protocol.md](docs/scene-skills-protocol.md) for the full protocol specification.
+Five conflict types detected (factual, temporal, emphasis, omission, granularity). Four auto-resolved. Factual contradictions escalated to user. Contradictions become insights, not errors.
 
-<details>
-<summary>Planned Scene Skills</summary>
+### Trust Hierarchy
 
-- **writing-voice** — Write content in your authentic voice
-- **learning-path** — Personalized learning plan from skill gaps
-- **stakeholder-briefer** — Quick context briefs for new collaborators
+Not all data is equal:
 
-</details>
+| Source Type | Trust Weight | Example |
+|-------------|:---:|---------|
+| Behavioral | 0.9 | GitHub commits, contribution patterns |
+| Third-party | 0.8 | LinkedIn recommendations, endorsements |
+| Declarative | 0.7 | Resume claims, self-descriptions |
+| Inferred | 0.5 | Cross-reference deductions |
+
+## Supported Sources
+
+| Source | Command | What It Captures |
+|--------|---------|-----------------|
+| Resume (PDF/text) | `/clawsight resume.pdf` | Career narrative, declared skills, achievements |
+| GitHub | `/clawsight https://github.com/user` | Real tech stack, contribution patterns, coding rhythm |
+| LinkedIn export | `/clawsight linkedin.zip` | Recommendations, endorsements, network signals |
+| Personal website | `/clawsight https://yoursite.com` | Self-presentation, projects, writing style |
+| JSON Resume | `/clawsight resume.json` | Structured profile data |
+
+> **LinkedIn**: Export via **Settings → Get a copy of your data**. See [LinkedIn Guide](docs/linkedin-guide.md) for steps.
+
+### More Commands
+
+| Command | Description |
+|---------|-------------|
+| `/clawsight insight` | Hidden strengths, blind spots, behavioral-declarative gaps |
+| `/clawsight potential` | Compound advantages × industry trends mapping |
+| `/clawsight score` | Profile completeness and understanding level |
+| `/clawsight refresh` | Re-fetch all sources, track profile evolution over time |
+
+## Architecture
+
+```
+  Sources                    Memory                   Scene Skills
+  ────────                   ──────                   ────────────
+  Resume ─┐                  USER.md                  🪞 career-mirror
+  GitHub ─┤   Parse →        MEMORY.md          →     🌈 tech-spectrum
+  LinkedIn┤   Reconcile →    memory/projects/*         🧭 tech-compass
+  Website ┘   Write →                                  📝 writing-voice *
+                                                       📚 learning-path *
+              ⛔ Privacy Preview                       👤 stakeholder-briefer *
+              before any write
+                                                       * Planned
+```
+
+**Pure Skill architecture**: No runtime. No dependencies. No compiled code. Just `SKILL.md` files interpreted by your AI agent. Works with any OpenClaw-compatible environment (Claude Code, etc.).
+
+### Key Design Decisions
+
+- **Read-only Scene Skills**: Scene Skills consume profile data but never write to it. Data integrity preserved.
+- **Cross-skill data passing**: HTML comment blocks with structured YAML, appended to reports. Downstream skills parse them silently.
+- **Graceful degradation**: Every skill works without a profile. More data = sharper insight, but zero data ≠ zero value.
+- **< 6KB per Scene Skill**: Each SKILL.md is self-contained and stays under the size budget. Methodology and reference data live in `docs/`.
+
+See [docs/architecture.md](docs/architecture.md) for the full technical deep dive.
+
+## AI Trends Data Layer
+
+Clawsight ships with a structured AI development timeline — the data backbone for tech-spectrum's positioning analysis:
+
+- **130+ milestones** across **8 tracks**: Agent & Toolchain, AI-Native Dev, Vertical AI, Multimodal, Safety & Governance, Infrastructure, Data Engineering, Hardware/Edge
+- Each track with: development phases, key milestones, acceleration rating, career impact assessment
+- Cross-track fusion analysis with scarcity ratings for intersection opportunities
+- Updated quarterly; designed for community contribution
+
+See [docs/ai-trends.md](docs/ai-trends.md) for the full timeline.
+
+## MCP Enhancement Path
+
+Clawsight is designed to evolve from pure prompt intelligence to tool-augmented intelligence:
+
+| Phase | What | Status |
+|-------|------|--------|
+| **Phase 1: Pure Skill** | LLM general knowledge + user profile | ✅ Current |
+| **Phase 2: MCP Tools** | Web search for real-time trends, job market APIs for demand validation | 🔜 Next |
+| **Phase 3: Data Layer** | Structured databases, skill taxonomies, market indices | 📋 Planned |
+
+Every data claim in output is tagged `[data-based]`, `[general-knowledge]`, or `[real-time]` so users always know the source.
 
 ## Documentation
 
 | Doc | Content |
 |-----|---------|
-| [Architecture](docs/architecture.md) | System design, pipeline, data flow |
-| [Scene Skills Protocol](docs/scene-skills-protocol.md) | Cross-skill interaction rules and data passing |
+| [Architecture](docs/architecture.md) | System design, pipeline detail, data flow |
+| [Scene Skills Protocol](docs/scene-skills-protocol.md) | How Scene Skills interact, data passing format, mode detection |
 | [AI Trends](docs/ai-trends.md) | 8-track AI development timeline (130+ milestones) |
-| [Skill Layers](docs/skill-layers.md) | AI Skill Layers L0-L4 framework |
-| [Schema](docs/schema.md) | Canonical extraction schema |
-| [Scoring](docs/scoring.md) | Profile completeness scoring |
-| [Templates](docs/templates.md) | Output templates |
-| [User Journey](docs/user-journey.md) | Interaction lifecycle |
-| [LinkedIn Guide](docs/linkedin-guide.md) | LinkedIn data export steps |
+| [Skill Layers](docs/skill-layers.md) | AI Skill Layers L0→L4 framework with assessment criteria |
+| [Schema](docs/schema.md) | Canonical data extraction schema |
+| [Scoring](docs/scoring.md) | Profile completeness scoring methodology |
+| [Templates](docs/templates.md) | Output templates for reports and memory files |
+| [User Journey](docs/user-journey.md) | Interaction lifecycle and onboarding flow |
+| [LinkedIn Guide](docs/linkedin-guide.md) | Step-by-step LinkedIn data export |
 | [Changelog](docs/changelog.md) | Version history |
 
 ## Roadmap
 
 - [x] **v0.3** — Multi-source engine + Pure Skill rewrite
 - [x] **v0.4** — Insight deepening + LinkedIn recommendations + refresh
-- [x] **v0.5** — Potential discovery + dialogue enrichment + career-mirror
+- [x] **v0.5** — Potential discovery + dialogue enrichment + career-mirror v1
 - [x] **v0.6** — Career Intelligence Chain (career-mirror v2 + tech-spectrum + tech-compass)
-- [ ] **v1.0** — OpenClaw profile standard + MCP Phase 2 + Hindsight integration
+- [ ] **v0.7** — MCP Phase 2: real-time trend data + job market validation
+- [ ] **v0.8** — writing-voice + learning-path Scene Skills
+- [ ] **v1.0** — OpenClaw profile standard + community skill marketplace
 
 ## Contributing
 
-Contributions are welcome! Here's how you can help:
+Clawsight is an open-source project. Here's how you can contribute:
 
-1. **Build a Scene Skill** — Create a new skill under `skills/` that consumes Clawsight's profile data for specialized analysis. See [career-mirror](skills/career-mirror/) as a reference and [scene-skills-protocol.md](docs/scene-skills-protocol.md) for the protocol spec.
-2. **Add a data source parser** — Propose a new source type (e.g., Stack Overflow, Dribbble) by opening an issue.
-3. **Improve cross-source heuristics** — The reconciliation rules in SKILL.md can always be sharpened with real-world edge cases.
-4. **Contribute to AI Trends** — Help maintain [docs/ai-trends.md](docs/ai-trends.md) with new milestones and updated assessments.
-5. **Fix bugs & docs** — Typos, unclear instructions, broken examples — all PRs welcome.
+**Build a Scene Skill** — The highest-impact contribution. Create a new skill under `skills/` that consumes Clawsight profile data. Reference: [career-mirror](skills/career-mirror/), protocol: [scene-skills-protocol.md](docs/scene-skills-protocol.md).
+
+**Maintain AI Trends** — Help keep [docs/ai-trends.md](docs/ai-trends.md) current with new milestones, updated phase assessments, and career impact analysis.
+
+**Add a Source Parser** — Propose new sources (Stack Overflow, Dribbble, Behance, etc.) by opening an issue.
+
+**Sharpen Reconciliation** — The cross-source heuristics in SKILL.md improve with real-world edge cases. If you find a conflict type it handles poorly, report it.
+
+**Fix Bugs & Docs** — Typos, unclear instructions, missing edge cases — all PRs welcome.
 
 ```bash
-# Fork → Clone → Create branch
-git checkout -b feature/my-scene-skill
-
-# Make changes, then
-git push origin feature/my-scene-skill
-# Open a PR
+git checkout -b feature/your-contribution
+# Make changes, then open a PR
 ```
 
 ## License
