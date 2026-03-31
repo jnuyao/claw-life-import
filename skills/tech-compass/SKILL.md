@@ -1,100 +1,97 @@
+---
+name: tech-compass
+version: 1.0.0
+description: >
+  AI-era career action planning and learning roadmap. Use when recommending what
+  to learn next, building a growth plan, assessing AI skill level, or creating
+  learning paths based on career profile. Use when user says: what should I learn,
+  tech growth plan, learning roadmap, skill gap analysis, AI skill assessment,
+  我该学什么, 技术成长路线, 学习路径, 技能差距. Commands: /tech-compass.
+  Upstream: Clawsight profile + career-mirror + tech-spectrum.
+user-invocable: true
+argument-hint: (no arguments — reads Clawsight profile automatically)
+metadata: { "openclaw": { "emoji": "🧭", "homepage": "https://github.com/jnuyao/clawsight", "version": "1.0.0" } }
+---
+
 # Tech Compass — 技术成长导航
 
-> "Knowing where you stand is wisdom. Knowing where to go next is power."
+## Quick Start
 
-Version: 1.0
-Type: Clawsight Scene Skill
-Upstream: Clawsight profile + Career Mirror + Tech Spectrum (optional)
-Reference: docs/skill-layers.md
+```
+/tech-compass           # Generate personalized growth plan
+```
 
-## Trigger
+Best after `/career-mirror` → `/tech-spectrum`. No profile? Will ask a few questions first.
 
-Activate on:
-- `/tech-compass`
-- Natural language: "what should I learn", "guide my tech growth", "learning roadmap", "我该学什么", "技术成长路线"
+Chain: `/career-mirror` → `/tech-spectrum` → **tech-compass** (you are here)
 
 ## Mode Detection
 
-1. Check for `USER.md`, `MEMORY.md`, `memory/projects/*.md`
-2. Scan context for `<!-- CAREER_MIRROR_OUTPUT` and `<!-- TECH_SPECTRUM_OUTPUT` blocks
-3. **Enhanced**: Profile + both upstream outputs · **Rich**: Profile only · **Lite**: No profile
+1. **Check** for `USER.md`, `MEMORY.md`, `memory/projects/*.md`.
+2. **Scan** context for `<!-- CAREER_MIRROR_OUTPUT` and `<!-- TECH_SPECTRUM_OUTPUT` blocks.
+3. **Enhanced**: Profile + both upstream outputs · **Rich**: Profile only · **Lite**: No profile.
 
 ## Lite Mode
 
-Ask for: current role, tech stack, target direction (if any), available learning time/week.
-Generate Sections 1 and 4 only. End with: "💡 Run /career-mirror → /tech-spectrum → /tech-compass for precision-guided navigation."
+1. **Ask** for: current role, tech stack, target direction (if any), available learning hours/week.
+2. **Generate** Sections 1 and 4 only.
+3. **End with**: "💡 Run /career-mirror → /tech-spectrum → /tech-compass for precision-guided navigation."
 
 ## Rich/Enhanced Mode — Full Report
 
-Read all memory files and upstream outputs. Do NOT modify any file.
+1. **Read** all memory files and upstream outputs. **Do NOT modify any file.**
+2. **Generate** the following 5 sections.
 
 ### Section 1: Skill Quadrant Matrix
 
-Map skills on a 2×2 grid:
-
-```
-                Market Demand HIGH
-                      │
-    🎯 Priority       │      💎 Core Asset
-    Investment        │      (Defend & Deepen)
-                      │
-  ────────────────────┼────────────────────
-                      │
-    ⏸️ Deprioritize    │      🏛️ Moat
-                      │      (Niche but Valuable)
-                      │
-                Market Demand LOW
-
-          Your Level LOW ←────→ Your Level HIGH
-```
-
-- **"Your Level" axis**: from career-mirror verification matrix (triple-verified=high, declared-only=low)
-- **"Market Demand" axis**: Phase 1 from LLM knowledge [general-knowledge], Phase 2 from job market APIs [real-time]
-
-For each quadrant, list skills with evidence and rationale.
-
-Include **T-Shape Assessment**: current shape (I/T/π/Comb) and recommended evolution.
+1. **Map** each skill onto the 2×2 grid:
+   - X-axis "Your Level": from career-mirror verification matrix (triple-verified=high, declared-only=low).
+   - Y-axis "Market Demand": Phase 1 from LLM knowledge [general-knowledge], Phase 2 from job market APIs [real-time].
+2. **Classify** into quadrants:
+   - 💎 **Core Asset** (high level + high demand): Defend & deepen.
+   - 🎯 **Priority Investment** (low level + high demand): Learn now.
+   - 🏛️ **Moat** (high level + low demand): Niche but valuable.
+   - ⏸️ **Deprioritize** (low level + low demand): Skip unless strategic.
+3. **List** 2-4 skills per quadrant with evidence and rationale.
+4. **Assess** T-Shape: current shape (I/T/π/Comb) and recommended evolution.
 
 ### Section 2: AI Skill Layer Assessment
 
-| Layer | Description | Your Status | Priority |
-|-------|------------|-------------|----------|
+1. **Place** user on the L0-L4 scale with evidence per layer:
+
+| Layer | Description | Your Evidence | Priority |
+|-------|------------|---------------|:--------:|
 | L0: AI User | Use AI tools daily | {evidence} | {H/M/L} |
-| L1: AI Integrator | Integrate AI into products | {evidence} | {H/M/L} |
+| L1: AI Integrator | Integrate AI into workflows | {evidence} | {H/M/L} |
 | L2: AI Builder | Build AI-powered systems | {evidence} | {H/M/L} |
 | L3: AI Architect | Design AI-native architectures | {evidence} | {H/M/L} |
-| L4: AI Definer | Define AI application in a domain | {evidence} | {H/M/L} |
+| L4: AI Definer | Define AI application paradigms | {evidence} | {H/M/L} |
 
-Reference: `docs/skill-layers.md` for detailed criteria.
-
-Current layer: L{N} · Target: L{N+1} · Gap skills: {list}
+2. **State** current layer, target layer, and gap skills.
+3. **Reference** `${CLAUDE_SKILL_DIR}/docs/skill-layers.md` for detailed criteria.
 
 > Not everyone needs L4. Right target depends on career phase and compound advantages.
 
 ### Section 3: Learning Routes
 
-Generate 2-3 routes based on:
-- Compound advantages (from career-mirror)
-- Opportunity windows (from tech-spectrum)
-- Skill quadrant gaps (Section 1)
-
-For each route:
-- **Why this route**: your advantage + market opportunity + ROI assessment
-- **Monthly milestones**: Month 1 (foundation) → Month 2-3 (application) → Month 4-6 (integration). Each with: Learn, Build, Verify.
-- **Route comparison table**: alignment, demand trajectory, time investment, risk, window urgency
+1. **Generate** 2-3 routes based on: compound advantages (career-mirror) + opportunity windows (tech-spectrum) + quadrant gaps (Section 1).
+2. **For each route, provide:**
+   - **Why this route**: your advantage + market opportunity + ROI assessment.
+   - **Monthly milestones**: Month 1 (foundation) → Month 2-3 (application) → Month 4-6 (integration). Each with: Learn, Build, Verify.
+3. **Build** route comparison table: alignment, demand trajectory, time investment, risk, window urgency.
 
 ### Section 4: 30-60-90 Day Action Plan
 
-- **🔴 This Week**: 2 specific, zero-prerequisite actions with rationale
-- **🟡 30-Day Target**: Measurable goals with verification method
-- **🟢 90-Day Milestone**: Significant outcomes with expected spectrum position impact
+1. **🔴 This Week**: 2 specific, zero-prerequisite actions with rationale.
+2. **🟡 30-Day Target**: Measurable goals with verification method.
+3. **🟢 90-Day Milestone**: Significant outcomes with expected spectrum position impact.
 
 ### Section 5: Risk & Adaptation
 
-- **If Route A isn't working**: warning signals, pivot direction, salvageable value
-- **If AI trends shift**: signals to monitor, adaptation strategy
+1. **For each route**: warning signals that it isn't working, pivot direction, salvageable value.
+2. **If AI trends shift**: signals to monitor, adaptation strategy.
 
-### Report Ending
+## Report Footer
 
 ```
 ---
@@ -104,14 +101,24 @@ For each route:
 
 ## Phase 2 Enhancement (MCP)
 
-When available: job market APIs for demand quantification, course APIs for resource linking, event APIs for meetup suggestions. Mark as [real-time].
+When available: **job market APIs** for demand quantification, **course APIs** for resource linking, **event APIs** for meetup suggestions. Tag as [real-time].
+
+## Error Handling
+
+| Situation | Response | Then |
+|-----------|----------|------|
+| No memory files found | — | Switch to Lite Mode |
+| Both upstream outputs missing | Generate without upstream | Note: "Run full chain for best results" |
+| Only career-mirror available | Generate without spectrum data | Skip Section 3 trend-based routes |
+| skill-layers.md not found | Use inline L0-L4 descriptions | Continue |
+| User has no clear direction | Generate all routes as options | Ask: "Which resonates most?" |
 
 ## Constraints
 
-1. **Actionable specificity**: Every recommendation concrete enough to act on TODAY. Not "learn AI" but "complete the LangChain RAG tutorial, build a prototype with your domain data."
-2. **Evidence-linked**: Trace recommendations to profile or upstream data.
-3. **Read-only**: Never modify memory files.
-4. **Honest difficulty**: Don't sugar-coat learning curves.
-5. **Respect autonomy**: Routes are options, not mandates.
-6. **Match user language**: Output in user's primary language.
-7. **Scope boundary**: Action plan only. Self-knowledge from career-mirror, positioning from tech-spectrum.
+1. **Actionable specificity.** Every recommendation concrete enough to act on TODAY. Not "learn AI" but "complete the LangChain RAG tutorial, build a prototype with your domain data."
+2. **Evidence-linked.** Trace recommendations to profile or upstream data.
+3. **Read-only.** Never modify memory files.
+4. **Honest difficulty.** Don't sugar-coat learning curves.
+5. **Respect autonomy.** Routes are options, not mandates.
+6. **Match user language.** Output in user's primary language.
+7. **Scope boundary.** Action plan only. Self-knowledge from career-mirror, positioning from tech-spectrum.

@@ -1,128 +1,134 @@
+---
+name: tech-spectrum
+version: 1.0.0
+description: >
+  AI disruption positioning and career impact analysis. Use when assessing how AI
+  affects a career, identifying AI readiness level, mapping skills against AI trends,
+  or finding opportunities in the AI revolution. Use when user says: where do I stand
+  with AI, how does AI affect me, AI career impact, AI readiness check, AI趋势分析,
+  AI对我的影响, 我在AI变革中的位置. Commands: /tech-spectrum.
+  Upstream: Clawsight profile + career-mirror. Downstream: tech-compass.
+user-invocable: true
+argument-hint: (no arguments — reads Clawsight profile automatically)
+metadata: { "openclaw": { "emoji": "🌈", "homepage": "https://github.com/jnuyao/clawsight", "version": "1.0.0" } }
+---
+
 # Tech Spectrum — AI 变革光谱定位
 
-> "In a revolution, the first thing to know is where you stand."
+## Quick Start
 
-Version: 1.0
-Type: Clawsight Scene Skill
-Upstream: Clawsight profile + Career Mirror output (optional)
-Downstream: tech-compass
-Reference: docs/ai-trends.md
+```
+/tech-spectrum          # Analyze your position in the AI revolution
+```
 
-## Trigger
+Best after `/career-mirror`. No profile? Tech Spectrum will ask a few questions first.
 
-Activate on:
-- `/tech-spectrum`
-- Natural language: "where do I stand with AI", "how does AI affect my career", "AI对我的职业有什么影响", "我在AI变革中处于什么位置"
+Chain: `/career-mirror` → **tech-spectrum** (you are here) → `/tech-compass`
 
 ## Mode Detection
 
-1. Check for `USER.md`, `MEMORY.md`, `memory/projects/*.md`
-2. Scan context for `<!-- CAREER_MIRROR_OUTPUT` block
-3. **Enhanced**: Profile + Career Mirror output · **Rich**: Profile only · **Lite**: No profile
+1. **Check** for `USER.md`, `MEMORY.md`, `memory/projects/*.md`.
+2. **Scan** context for `<!-- CAREER_MIRROR_OUTPUT` block.
+3. **Enhanced**: Profile + Career Mirror output · **Rich**: Profile only · **Lite**: No profile.
 
 ## Lite Mode
 
-Ask for: industry, current role, 3-5 core skills, years of experience.
-Generate Sections 1-2 only. End with: "💡 Run /career-mirror first for deeper cross-source positioning."
+1. **Ask** for: industry, current role, 3-5 core skills, years of experience.
+2. **Generate** Sections 1-2 only.
+3. **End with**: "💡 Run /career-mirror first for deeper cross-source positioning."
 
 ## Rich/Enhanced Mode — Full Report
 
-Read all memory files and Career Mirror output (if present). Do NOT modify any file.
-
-### Core Framework: Three-Layer Spectrum Analysis
-
-- **Layer 1 — AI Exposure**: How much is AI affecting your world?
-- **Layer 2 — AI Readiness**: How prepared are you to leverage AI?
-- **Layer 3 — Trend Intersection**: Where do AI trends meet YOUR profile?
+1. **Read** all memory files and Career Mirror output (if present). **Do NOT modify any file.**
+2. **Generate** the following 4 sections using the Three-Layer framework:
+   - Layer 1 — AI Exposure: How much is AI affecting your world?
+   - Layer 2 — AI Readiness: How prepared are you to leverage AI?
+   - Layer 3 — Trend Intersection: Where do AI trends meet YOUR profile?
 
 ### Section 1: AI Spectrum Position
 
-```
-AI-vulnerable → AI-adjacent → AI-augmented → AI-native → AI-shaping
-                                    ▲
-                                  [YOU]
-```
+1. **Place** user on the five-level spectrum:
+   ```
+   AI-vulnerable → AI-adjacent → AI-augmented → AI-native → AI-shaping
+                                       ▲
+                                     [YOU]
+   ```
+2. **Score** across 5 dimensions (each with evidence + confidence tag):
+   - Industry AI penetration · Role automation risk · AI tool usage signals · Tech stack AI affinity · AI learning signals
+3. **Explain** placement rationale with evidence links.
 
-| Level | Meaning |
-|-------|---------|
-| AI-vulnerable | Core work can be largely automated by AI |
-| AI-adjacent | Work changing due to AI but not yet adopted |
-| AI-augmented | Actively using AI to enhance work output |
-| AI-native | AI is a core professional capability |
-| AI-shaping | Defining how AI is applied in a domain |
-
-Assess across 5 dimensions (each with evidence and confidence tag):
-- Industry AI penetration · Role automation risk · AI tool usage signals · Tech stack AI affinity · AI learning signals
+> AI-vulnerable = core work largely automatable · AI-adjacent = work changing but AI not yet adopted · AI-augmented = actively using AI to enhance output · AI-native = AI is a core capability · AI-shaping = defining how AI is applied in a domain
 
 ### Section 2: AI Exposure Analysis
 
-For the user's **industry**: what's already transformed, currently transforming, and next to be transformed by AI.
-
-For the user's **role**: estimated automatable vs augmentable work percentage, and core human value AI cannot replace.
-
-> Always mark: [data-based] for profile-derived claims, [general-knowledge] for LLM training knowledge.
-
-Include **Replacement Risk vs Augmentation Opportunity** — nuanced, not binary.
+1. **Assess industry exposure**: what's already transformed, currently transforming, next to transform.
+2. **Assess role exposure**: estimated automatable vs augmentable percentage, core human value AI cannot replace.
+3. **Build** Replacement Risk vs Augmentation Opportunity table (nuanced, not binary).
+4. **Tag** every claim: [data-based] for profile-derived, [general-knowledge] for LLM knowledge.
 
 ### Section 3: Trend × Profile Intersection
 
-Reference `docs/ai-trends.md` for the 8 AI tracks. Produce:
+**Reference** `${CLAUDE_SKILL_DIR}/docs/ai-trends.md` for the 8 AI tracks.
 
-**Relevance table**: Which of the 8 tracks matter most to this user, with current phase and acceleration rating.
-
-**Convergence Points**: Where existing capabilities naturally meet AI trends. For each: your capability + AI trend + why this intersection matters + market signal.
-
-**Divergence Risks**: Where current path drifts from AI trends. Severity + time horizon.
-
-**Opportunity Windows**: Unique opportunities visible from YOUR intersection point. For each: your unique position + trend support + window estimate + scarcity assessment + track acceleration (opening or closing?).
+1. **Build relevance table**: which tracks matter most to this user, with current phase + acceleration.
+2. **Identify convergence points**: existing capability + AI trend + why it matters + market signal.
+3. **Identify divergence risks**: where current path drifts from AI trends. Severity + time horizon.
+4. **Map opportunity windows**: your unique position + trend support + window estimate + scarcity + whether window is opening or closing.
 
 ### Section 4: Data-Driven Perspective (AI Anxiety Antidote)
 
 Not vague reassurance. Instead:
-- What you DON'T need to worry about (with evidence)
-- What you SHOULD pay attention to (with reasoning)
-- Key reframe: fear-based → opportunity-based, grounded in data
+1. **List** what you DON'T need to worry about (with evidence).
+2. **List** what you SHOULD pay attention to (with reasoning).
+3. **Reframe**: fear-based → opportunity-based, grounded in data.
 
-### Report Ending & Data Passing
+## Report Footer & Data Passing
 
-```
----
-*Generated by Tech Spectrum v1.0 | A coordinate system, not a verdict.*
-*Ready to chart your course? → /tech-compass*
-```
-
-Append hidden block for tech-compass:
-
-```html
-<!-- TECH_SPECTRUM_OUTPUT
-version: 1.0
-date: {ISO date}
-spectrum_position: "{level}"
-ai_exposure:
-  industry_penetration: "{H/M/L}"
-  role_automation_risk: "{H/M/L}"
-  augmentation_opportunity: "{H/M/L}"
-relevant_tracks: ["{track numbers}"]
-convergence_points:
-  - name: "{name}"
-    capability: "{your skill}"
-    trend: "{AI trend}"
-opportunity_windows:
-  - name: "{name}"
-    scarcity: "{assessment}"
-    window: "{timeframe}"
--->
-```
+1. **End** with:
+   ```
+   ---
+   *Generated by Tech Spectrum v1.0 | A coordinate system, not a verdict.*
+   *Ready to chart your course? → /tech-compass*
+   ```
+2. **Append** hidden block for tech-compass:
+   ```html
+   <!-- TECH_SPECTRUM_OUTPUT
+   version: 1.0
+   date: {ISO date}
+   spectrum_position: "{level}"
+   ai_exposure:
+     industry_penetration: "{H/M/L}"
+     role_automation_risk: "{H/M/L}"
+     augmentation_opportunity: "{H/M/L}"
+   relevant_tracks: ["{track numbers}"]
+   convergence_points:
+     - capability: "{your skill}"
+       trend: "{AI trend}"
+   opportunity_windows:
+     - name: "{name}"
+       scarcity: "{assessment}"
+       window: "{timeframe}"
+   -->
+   ```
 
 ## Phase 2 Enhancement (MCP)
 
-When MCP tools are available: web search for real-time AI trends, job market APIs for demand validation. Mark as [real-time] vs [general-knowledge].
+When MCP tools available: **web search** for real-time AI trends, **job market APIs** for demand validation. Tag as [real-time] vs [general-knowledge].
+
+## Error Handling
+
+| Situation | Response | Then |
+|-----------|----------|------|
+| No memory files found | — | Switch to Lite Mode |
+| Career Mirror output missing | Generate without upstream data | Note: "Run /career-mirror first for deeper analysis" |
+| Industry not identifiable | Ask user to specify | Wait for input |
+| ai-trends.md not found | Use LLM general knowledge | Tag all trend claims [general-knowledge] |
 
 ## Constraints
 
-1. **Evidence-first**: Link claims to profile data or mark [general-knowledge].
-2. **Honesty over comfort**: If AI-vulnerable, say so — but always pair with actionable framing.
-3. **Read-only**: Never modify memory files.
-4. **No false precision**: Don't invent percentages. Use ranges and qualitative assessments.
-5. **Match user language**: Output in user's primary language.
-6. **Scope boundary**: No learning paths or action plans — that's tech-compass.
+1. **Evidence-first.** Link claims to profile data or tag [general-knowledge].
+2. **Honest over comfortable.** If AI-vulnerable, say so — but pair with actionable framing.
+3. **Read-only.** Never modify memory files.
+4. **No false precision.** Don't invent percentages. Use ranges and qualitative assessments.
+5. **Match user language.** Output in user's primary language.
+6. **Scope boundary.** No learning paths or action plans — that's tech-compass.
